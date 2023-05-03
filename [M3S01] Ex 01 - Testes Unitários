@@ -1,0 +1,61 @@
+package tech.devinhouse;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class FolhaDePagamentoTest {
+
+    private FolhaDePagamento folhaDePagamento;
+
+    @BeforeEach
+    public void setup() {
+        System.out.println("Executado antes de cada metodo de testes");
+        folhaDePagamento = new FolhaDePagamento();
+    }
+
+    @Nested
+    class CalcularSalarioTest {
+
+        @Test
+        @DisplayName("Quando não há gratificação e o cargo não é de gerente, o salário não muda")
+        void calcularSalario() {
+            // given   - pre condicoes
+            Double salarioBase = 1000.0, gratificaca = 0.0;
+            String cargo = "Desenvolvedor";
+            // when - qdo chama o metodo que eu quero testar
+            Double salario = folhaDePagamento.calcularSalarioBruto(salarioBase, gratificaca, cargo);
+            // then - entao
+            assertNotNull(salario); // conferindo que o resultado nao eh nulo
+            assertEquals(1000.0, salario);
+        }
+
+
+    }
+
+    @Nested
+    class CalcularDescontosTest {
+
+        @Test
+        @DisplayName("Quando existem vários descontos")
+        void calcularSalario() {
+            // given   - pre condicoes
+            Double salarioBase = 1000.0;
+            List<Double> descontos = Arrays.asList(100.0, 50.0, 200.0);
+
+            // when - qdo chama o metodo que eu quero testar
+            Double salario = folhaDePagamento.calcularSalarioLiquido(salarioBase,descontos);
+            // then - entao
+            assertNotNull(salario); // conferindo que o resultado nao eh nulo
+            assertEquals(650.0, salario);
+        }
+
+
+    }
+}
